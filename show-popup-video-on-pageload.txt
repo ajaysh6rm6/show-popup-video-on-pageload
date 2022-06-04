@@ -1,0 +1,90 @@
+STEP1==>> CSS
+<style type="text/css">
+        .overlay {
+            width: 100%;
+            background: rgba(0, 0, 0, .75);
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 99999;
+        }
+
+        .videoBox {
+            position: fixed;
+            width: 90%;
+            left: 50%;
+            top: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            padding: 20px;
+            background: #fff;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .videoBox video {
+            width: 100%;
+        }
+
+        .close {
+            width: 36px;
+            height: 36px;
+            position: absolute;
+            top: -18px;
+            right: -18px;
+            display: block;
+            background: transparent url(../../static/appassets/images/logo/close.png) no-repeat center center;
+            opacity: .8;
+        }
+
+        .close:hover {
+            opacity: 1;
+        }
+
+        @media (min-width: 767px) {
+            .videoBox {
+                width: 50%;
+            }
+        }
+    </style>
+	
+	
+STEP2==>> HTML
+<div class="overlay">
+                    <div class="videoBox" id="videobox">
+                        <a class="close"></a>
+                        <!--<video autoplay controls src="{% static 'appassets/images/mov_bbb.mp4' %}"></video>-->
+                        <video loop="true" autoplay="true" controls muted>
+                            <source src="{% static 'appassets/images/mov_bbb.mp4' %}" type="video/mp4" />
+                            <source src="http://www.example.com/CorporateVideo.ogv" type="video/ogv" />
+                            <source src="http://www.example.com/CorporateVideo.webm" type="video/webm" />
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>	
+				
+				
+STEP3==>> JS
+<script>
+        $(function () {
+            // CLOSE AND REMOVE ON ESC
+            $(document).on('keyup', function (e) {
+                if (e.keyCode == 27) {
+                    $('.overlay').remove();
+                }
+            });
+
+            // CLOSE AND REMOVE ON CLICK
+            $('body').on('click', '.overlay, .close', function () {
+                $('.overlay').remove();
+            });
+
+            // SO PLAYING WITH THE VIDEO CONTROLS DOES NOT
+            // CLOSE THE POPUP
+            $('body').on('click', '.videoBox', function (e) {
+                e.stopPropagation();
+            });            
+        });
+    </script>				
+				
